@@ -2,6 +2,7 @@ import { nav_items } from "./modules";
 import { nav_a } from "./modules";
 import { create_nav } from "./modules";
 import { add_project } from "./modules";
+import { create_project_list } from "./modules";
 
 // this is for the DOM manipulation stuff page
 
@@ -59,3 +60,21 @@ for (let i = 0; i < 2; i++) {
 }
 nav_bar.appendChild(nav_a_element);
 content.appendChild(nav_bar);
+
+
+// main content div
+const main_content = document.createElement('div');
+main_content.classList.add('main-content');
+content.appendChild(main_content);
+
+// need to create the left columns
+const list_bar = document.createElement('div');
+const nav_group = document.querySelectorAll('.nav-item');
+nav_group.forEach(nav_i => {
+    console.log(nav_i.classList.contains('active'));
+    if (nav_i.classList.contains('active')) {
+        const list = create_project_list(nav_i.textContent);
+        list_bar.appendChild(list);
+    }
+});
+main_content.append(list_bar);

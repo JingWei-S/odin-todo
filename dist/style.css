@@ -65,11 +65,18 @@ body {
     color: var(--main-text);
     font-size: 20px;
     cursor: pointer;
+    appearance: none;
+    border: none;
+    background: none;
+}
+
+.nav-item.active {
+    border-bottom: 1.5px solid var(--main-text);
 }
 
 .nav > div:first-child {
     display: flex;
-    margin-left: 10em;
+    margin-left: 20em;
     gap: 3em;
     min-width: fit-content;
 }
@@ -77,12 +84,16 @@ body {
 .nav > div:last-child {
     display: flex;
     margin-left: auto;
-    margin-right: 10em;
+    margin-right: 5em;
     gap: 3em;
 }
 
 .nav-deletable {
     gap:0.3em;
+}
+
+.nav-deletable.active {
+    border-bottom: 1.5px solid var(--main-blue);
 }
 
 .nav-add {
@@ -92,4 +103,38 @@ body {
 .nav-color {
     color: var(--main-blue);
     font-weight: bold;
+}
+
+.main-content {
+    display: flex;
+    flex: 1;
+}
+
+.main-content>div {
+    display: flex;
+    flex-direction: column;
+    background-color: #f6f6f6;
+    align-items: center;
+    padding: 2em;
+}
+
+.main-content>div>div {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3em;
+    gap: 1em;
+}
+
+.main-content button {
+    font-size: 18px;
+    color: white;
+    background-color: var(--main-blue);
+    border: none;
+    padding: 0.5em 3em;
+    border-radius: 8px;
+}
+
+.main-content button.non-active {
+    background-color: white;
+    color: var(--main-text);
 }
