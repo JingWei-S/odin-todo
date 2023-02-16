@@ -20,6 +20,7 @@ body {
 
 .header {
     background: linear-gradient(to right, var(--top-beige), var(--top-blue));
+    min-height: 10vh;
 }
 
 .header p {
@@ -42,15 +43,41 @@ body {
 
 .content {
     display: flex;
+    flex-direction: column;
     flex-grow: 1;
 }
 
 .nav {
     display: flex;
-    flex-direction: column;
-    background-color: var(--main-gray);;
+    border-bottom: 1px solid var(--main-gray);
+    gap: 2em;
+    padding: 0.3em 0;
 }
 
 .nav-item {
     display: flex;
+    color: var(--main-text);
+    font-size: 20px;
+}
+
+.nav > div:first-child {
+    display: flex;
+    margin-left: 10em;
+    gap: 3em;
+}
+
+.nav > div:last-child {
+    display: flex;
+    margin-left: auto;
+    margin-right: 3em;
+    gap: 2em;
+}
+
+.nav-deletable {
+    gap:0.3em;
+}
+
+.nav-add {
+    cursor: pointer;
+    min-width: fit-content;
 }
