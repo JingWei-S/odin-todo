@@ -1,3 +1,7 @@
+import { nav_items } from "./modules";
+import { nav_a } from "./modules";
+import { create_nav } from "./modules";
+
 // this is for the DOM manipulation stuff page
 
 // the body
@@ -8,9 +12,9 @@ const content = document.querySelector('.content');
 
 // add a header
 const header = document.createElement('div');
-const h_text = document.createElement('p');
-h_text.textContent = 'My PhD To-Do Loooooooong List';
-header.appendChild(h_text);
+// const h_text = document.createElement('p');
+// h_text.textContent = 'My PhD To-Do Loooooooong List';
+// header.appendChild(h_text);
 header.classList.add('header');
 body.insertBefore(header, content);
 
@@ -24,20 +28,31 @@ content.after(footer);
 // add a navigation bar on the left
 const nav_bar = document.createElement('div');
 nav_bar.classList.add('nav');
-// the items in the nav bar
-const timespan = ['Today', 'This Week', 'This Month', 'This year'];
-// I will allow add more customized projects
-const projects = ['Research Ideas', 'Study Progress', 'Paper Writing'];
-for (let i=0; i < timespan.length; i++) {
-    const item = document.createElement('a');
-    const image = document.createElement('img');
-    image.src = '#';
-    const item_p = document.createElement('span');
-    item_p.textContent = timespan[i];
-    item.appendChild(image);
-    item.appendChild(item_p);
-    item.classList.add('nav_item');
-    nav_bar.appendChild(item);
+// create the nav bar
+const nav_project = document.createElement('div');
+for (let i = 0; i < nav_items.length; i++) {
+    const element = i === 0? create_nav(nav_items[i], 1) : create_nav(nav_items[i], 2);
+    nav_project.appendChild(element);
 }
+nav_bar.appendChild(nav_project);
+
+// create add option
+const add_nav = create_nav('Add new +', 4);
+nav_bar.appendChild(add_nav);
+
+add_nav.addEventListener('click', () => {
+    console.log('Test functions');
+})
+
+// nav items on the right
+const nav_a_element = document.createElement('div');
+for (let i = 0; i < 2; i++) {
+    const element = create_nav(nav_a[i], 3);
+    nav_a_element.appendChild(element);
+}
+nav_bar.appendChild(nav_a_element);
 content.appendChild(nav_bar);
+
+
+
 
