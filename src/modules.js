@@ -22,8 +22,13 @@ const create_nav = (nav_name, n) => {
     return element;
 }
 
+const add_project = () => {
+    return create_nav('Test', 2);
+}
+
 export {
     nav_items,
     nav_a,
-    create_nav
+    create_nav,
+    add_project
 }

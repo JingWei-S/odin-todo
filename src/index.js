@@ -1,6 +1,7 @@
 import { nav_items } from "./modules";
 import { nav_a } from "./modules";
 import { create_nav } from "./modules";
+import { add_project } from "./modules";
 
 // this is for the DOM manipulation stuff page
 
@@ -41,7 +42,9 @@ const add_nav = create_nav('Add new +', 4);
 nav_bar.appendChild(add_nav);
 
 add_nav.addEventListener('click', () => {
-    console.log('Test functions');
+    const element = add_project();
+    nav_project.appendChild(element);
+    console.log('test');
 })
 
 // nav items on the right
