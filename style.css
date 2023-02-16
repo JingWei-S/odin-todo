@@ -9,6 +9,10 @@
     --bottom-blue: #553f96;
 }
 
+* {
+    box-sizing: border-box;
+  }
+
 body {
     min-height: 100vh;
     padding: 0;
@@ -45,6 +49,7 @@ body {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    overflow: auto;
 }
 
 .nav {
@@ -52,24 +57,27 @@ body {
     border-bottom: 1px solid var(--main-gray);
     gap: 3em;
     padding: 0.3em 0;
+    overflow: hidden;
 }
 
 .nav-item {
     display: flex;
     color: var(--main-text);
     font-size: 20px;
+    cursor: pointer;
 }
 
 .nav > div:first-child {
     display: flex;
     margin-left: 10em;
     gap: 3em;
+    min-width: fit-content;
 }
 
 .nav > div:last-child {
     display: flex;
     margin-left: auto;
-    margin-right: 3em;
+    margin-right: 10em;
     gap: 3em;
 }
 
@@ -78,6 +86,10 @@ body {
 }
 
 .nav-add {
-    cursor: pointer;
     min-width: fit-content;
+}
+
+.nav-color {
+    color: var(--main-blue);
+    font-weight: bold;
 }
