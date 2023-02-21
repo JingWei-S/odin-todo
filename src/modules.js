@@ -35,18 +35,21 @@ const select_project = (target) => {
 // this is the left info bar
 let info = {
     'Time': ['Today', 'Week', 'Month'],
+    'Researchx': ['Study', 'Paper', 'Thesis', 'Others'],
+    'Lifex': ['Grocery', 'Chores', 'Utility', 'Others']
 };
 
 const create_project_list = (nav_name) => {
-    const list_div = document.createElement('div');
+    const list_ul = document.createElement('div');
     const list = info[nav_name];
     for (let i = 0; i < list.length; i++) {
         const element = document.createElement('button');
         element.textContent = list[i];
-        list_div.appendChild(element);
+        list_ul.appendChild(element);
     }
-    return list_div
+    return list_ul
 }; 
+
 
 
 export {

@@ -26,7 +26,8 @@ footer.textContent = "Made By Jing with PhD Regrets";
 footer.classList.add("footer");
 content.after(footer);
 
-// add a navigation bar on the left
+
+// add a navigation bar on the top
 const nav_bar = document.createElement("div");
 nav_bar.classList.add("nav");
 // create the nav bar
@@ -43,12 +44,11 @@ const add_nav = create_nav("Add new +", 4);
 nav_bar.appendChild(add_nav);
 
 add_nav.addEventListener("click", () => {
-  if (nav_items.length > 6) {
-    console.log("Too many projects, are you insane?");
-  } else {
+  // we do not allow appending new projects indefinitely
+  if (nav_project.childNodes.length < 6) {
     const element = add_project();
     nav_project.appendChild(element);
-    console.log("test");
+    console.log(nav_project.childNodes.length);
   }
 });
 
@@ -59,22 +59,43 @@ for (let i = 0; i < 2; i++) {
   nav_a_element.appendChild(element);
 }
 nav_bar.appendChild(nav_a_element);
-content.appendChild(nav_bar);
-
-
-// main content div
-const main_content = document.createElement('div');
-main_content.classList.add('main-content');
-content.appendChild(main_content);
+content.appendChild(nav_bar);  // the top thing
 
 // need to create the left columns
 const list_bar = document.createElement('div');
+list_bar.classList.add('list-bar');
+const list = create_project_list('Time');
+list_bar.appendChild(list);
 const nav_group = document.querySelectorAll('.nav-item');
-nav_group.forEach(nav_i => {
-    console.log(nav_i.classList.contains('active'));
-    if (nav_i.classList.contains('active')) {
-        const list = create_project_list(nav_i.textContent);
-        list_bar.appendChild(list);
+nav_bar.addEventListener('click', (event) => {
+  if (event.target.tagName === 'BUTTON') {
+    nav_group.forEach((nav_i) => {
+      console.log(nav_i.classList.contains('active'));
+      nav_i.classList.remove('active');
+    });
+    
+    const nav_i = event.target;
+    nav_i.classList.add('active');
+    const list = create_project_list(nav_i.textContent);
+    // this is to remove all the children nodes
+    while (list_bar.firstChild) {
+      list_bar.replaceChildren();
     }
+    list_bar.appendChild(list);
+  }
 });
-main_content.append(list_bar);
+
+// nav_group.forEach(nav_i => nav_i.addEventListener( 'click', () => {
+//     console.log(nav_i.textContent);
+//     nav_i.classList.add('active');
+//     if (nav_i.classList.contains('active')) {
+//         const list = create_project_list(nav_i.textContent);
+//         list_bar.appendChild(list);}
+//   })
+// );
+content.append(list_bar);
+// content.insertBefore(list_bar, nav_bar);
+
+
+
+
