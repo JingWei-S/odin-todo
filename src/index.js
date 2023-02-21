@@ -85,16 +85,17 @@ nav_bar.addEventListener('click', (event) => {
   }
 });
 
-// nav_group.forEach(nav_i => nav_i.addEventListener( 'click', () => {
-//     console.log(nav_i.textContent);
-//     nav_i.classList.add('active');
-//     if (nav_i.classList.contains('active')) {
-//         const list = create_project_list(nav_i.textContent);
-//         list_bar.appendChild(list);}
-//   })
-// );
 content.append(list_bar);
-// content.insertBefore(list_bar, nav_bar);
+
+
+// initiate the task panel
+const task_panel = document.createElement('div');
+const task_title = document.createElement('div');
+task_title.textContent = 'Tasks';
+task_panel.appendChild(task_title);
+// real task list
+const task_list = document.createElement('div');
+
 
 
 
