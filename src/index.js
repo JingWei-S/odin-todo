@@ -3,6 +3,8 @@ import { nav_a } from "./modules";
 import { create_nav } from "./modules";
 import { add_project } from "./modules";
 import { create_project_list } from "./modules";
+import { taskObject } from "./tasks";
+import { createTaskItem } from "./tasks";
 
 // this is for the DOM manipulation stuff page
 
@@ -90,11 +92,30 @@ content.append(list_bar);
 
 // initiate the task panel
 const task_panel = document.createElement('div');
+task_panel.classList.add('task-panel');
 const task_title = document.createElement('div');
 task_title.textContent = 'Tasks';
 task_panel.appendChild(task_title);
+
+const taskSamples = ['Sleep for 12 hours', 'Study for 24 hours', 'Hunting Alligators Non STOP'];
+
+const taskSample1 = taskObject(taskSamples[0], '2021-02-02');
+const taskSample2 = taskObject(taskSamples[1], '2021-02-02');
+const taskSample3 = taskObject(taskSamples[2], '2021-02-02');
+
 // real task list
-const task_list = document.createElement('div');
+const task_list = document.createElement('ul');
+const task1 = createTaskItem(taskSample1);
+task_list.appendChild(task1);
+const task2 = createTaskItem(taskSample2);
+task_list.appendChild(task2);
+const task3 = createTaskItem(taskSample3);
+task_list.appendChild(task3);
+
+task_panel.appendChild(task_list);
+
+// add to content
+content.appendChild(task_panel);
 
 
 
