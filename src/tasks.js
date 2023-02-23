@@ -23,9 +23,11 @@ const createTaskItem = (taskObject) => {
   task_item_whole.appendChild(task_item_due);
   const archive = document.createElement("img");
   archive.src = "./images/icons/archive-arrow-down-outline.svg";
+  archive.classList.add('archive');
   task_item_whole.appendChild(archive);
   const achievement = document.createElement("img");
   achievement.src = "./images/icons/trophy.svg";
+  achievement.classList.add('achivement');
   task_item_whole.appendChild(achievement);
 
   task_item_li.appendChild(task_item_whole);
@@ -49,11 +51,21 @@ const handleCircleClick = (circle) => {
 };
 
 const crossoverText = (desp) => {
-    desp.classList.add('crossover');
-}
+  desp.classList.add("crossover");
+};
 
 const reverseText = (desp) => {
-    desp.classList.remove('crossover');
+  desp.classList.remove("crossover");
+};
+
+
+// make task items disappear from the panel
+const removeTaskItem = (task) => {
+    const task_item = task.parentNode.parentNode;
+    task_item.remove();
+    // console.log(task.parentNode);
+    // console.log(task.parentNode.parentNode);
 }
 
-export { taskObject, createTaskItem, handleCircleClick };
+
+export { taskObject, createTaskItem, handleCircleClick, removeTaskItem };
