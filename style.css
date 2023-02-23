@@ -127,7 +127,7 @@ body {
     list-style: none;
 }
 
-.list-bar button {
+.specific-choice {
     font-size: 18px;
     color: white;
     background-color: var(--main-blue);
@@ -138,9 +138,9 @@ body {
     border-radius: 8px;
 }
 
-.list-bar button.non-active {
-    background-color: white;
-    color: var(--main-text);
+.specific-choice.entry-select {
+    background-color: var(--main-light-blue);
+    color: white;
 }
 
 .circle {
