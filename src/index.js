@@ -7,8 +7,17 @@ import { taskObject } from "./tasks";
 import { createTaskItem } from "./tasks";
 import { handleCircleClick } from "./tasks";
 import { removeTaskItem } from "./tasks";
+import { createTaskPanel } from "./tasks";
+import { left_nav_selection } from "./modules";
 
 // this is for the DOM manipulation stuff page
+
+// initiate the task panel temporarily
+const taskSamples = [
+  "Sleep for 12 hours",
+  "Study for 24 hours",
+  "Hunting Alligators Non STOP",
+];
 
 // the body
 const body = document.querySelector("body");
@@ -29,7 +38,6 @@ const footer = document.createElement("div");
 footer.textContent = "Made By Jing with PhD Regrets";
 footer.classList.add("footer");
 content.after(footer);
-
 
 // add a navigation bar on the top
 const nav_bar = document.createElement("div");
@@ -52,7 +60,7 @@ add_nav.addEventListener("click", () => {
   if (nav_project.childNodes.length < 6) {
     const element = add_project();
     nav_project.appendChild(element);
-    console.log(nav_project.childNodes.length);
+    
   }
 });
 
@@ -63,90 +71,65 @@ for (let i = 0; i < 2; i++) {
   nav_a_element.appendChild(element);
 }
 nav_bar.appendChild(nav_a_element);
-content.appendChild(nav_bar);  // the top thing
+content.appendChild(nav_bar); // the top thing
 
 // need to create the left columns
-const list_bar = document.createElement('div');
-list_bar.classList.add('list-bar');
-const list = create_project_list('Time');
+const list_bar = document.createElement("div");
+list_bar.classList.add("list-bar");
+const list = create_project_list("Time");
 list_bar.appendChild(list);
-const nav_group = document.querySelectorAll('.nav-item');
-nav_bar.addEventListener('click', (event) => {
-  if (event.target.tagName === 'BUTTON') {
+const nav_group = document.querySelectorAll(".nav-item");
+nav_bar.addEventListener("click", (event) => {
+  if (event.target.tagName === "BUTTON") {
     nav_group.forEach((nav_i) => {
-      console.log(nav_i.classList.contains('active'));
-      nav_i.classList.remove('active');
+      nav_i.classList.remove("active");
     });
-    
+
     const nav_i = event.target;
-    nav_i.classList.add('active');
+    nav_i.classList.add("active");
     const list = create_project_list(nav_i.textContent);
     // this is to remove all the children nodes
     while (list_bar.firstChild) {
       list_bar.replaceChildren();
     }
     list_bar.appendChild(list);
+    const task_panel = createTaskPanel(taskSamples);
+    content.appendChild(task_panel);
+    left_nav_selection(list_bar);
   }
 });
 
 content.append(list_bar);
+left_nav_selection(list_bar);
+const task_panel = createTaskPanel(taskSamples);
 
-
-// initiate the task panel
-const task_panel = document.createElement('div');
-task_panel.classList.add('task-panel');
-const task_title = document.createElement('div');
-task_title.textContent = 'Tasks';
-task_panel.appendChild(task_title);
-
-const taskSamples = ['Sleep for 12 hours', 'Study for 24 hours', 'Hunting Alligators Non STOP'];
-
-const taskSample1 = taskObject(taskSamples[0], '2021-02-02');
-const taskSample2 = taskObject(taskSamples[1], '2021-02-02');
-const taskSample3 = taskObject(taskSamples[2], '2021-02-02');
-
-// real task list
-const task_list = document.createElement('ul');
-const task1 = createTaskItem(taskSample1);
-task_list.appendChild(task1);
-const task2 = createTaskItem(taskSample2);
-task_list.appendChild(task2);
-const task3 = createTaskItem(taskSample3);
-task_list.appendChild(task3);
-
-task_panel.appendChild(task_list);
 
 // add to content
 content.appendChild(task_panel);
 
+
+
+
 // add the event listener to the circle
-const circles = document.querySelectorAll('.circle');
-circles.forEach(circle => {
-  circle.addEventListener('click', () => {
-    console.log('test')
+const circles = document.querySelectorAll(".circle");
+circles.forEach((circle) => {
+  circle.addEventListener("click", () => {
     handleCircleClick(circle);
   });
 });
 
-
 // manipulate achievements
-const ach_icons = document.querySelectorAll('.achivement');
-ach_icons.forEach(ach => {
-  ach.addEventListener('click', () => {
+const ach_icons = document.querySelectorAll(".achivement");
+ach_icons.forEach((ach) => {
+  ach.addEventListener("click", () => {
     removeTaskItem(ach);
   });
 });
 
 // manipulate archive
-const axv_icons = document.querySelectorAll('.archive');
-axv_icons.forEach(axv => {
-  axv.addEventListener('click', () => {
+const axv_icons = document.querySelectorAll(".archive");
+axv_icons.forEach((axv) => {
+  axv.addEventListener("click", () => {
     removeTaskItem(axv);
   });
 });
-
-
-
-
-
-

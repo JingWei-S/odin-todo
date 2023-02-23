@@ -1,3 +1,5 @@
+import { getEntry } from "./modules";
+
 const taskObject = (taskContent, dueDate) => {
   return {
     taskContent,
@@ -67,5 +69,39 @@ const removeTaskItem = (task) => {
     // console.log(task.parentNode.parentNode);
 }
 
+const createTaskPanel = (task_storage) => {
+    let task_panel = document.querySelector('.task-panel');
+    if (task_panel) {
+        task_panel.remove();
+    }
+    const { top_button, left_button } = getEntry();
+    // console.log(left_button.textContent);
+    // we can assume the format of task_storage
+    task_panel = document.createElement('div');
+    task_panel.classList.add('task-panel');
+    const task_title = document.createElement('div');
+    task_title.textContent = 'Tasks';
+    task_panel.appendChild(task_title);
 
-export { taskObject, createTaskItem, handleCircleClick, removeTaskItem };
+    // console.log(task_storage);
+    const taskSample1 = taskObject(task_storage[0], left_button.textContent);
+    const taskSample2 = taskObject(task_storage[1], top_button.textContent);
+    const taskSample3 = taskObject(task_storage[2], '2021-02-02');
+
+    // real task list
+    const task_list = document.createElement('ul');
+    const task1 = createTaskItem(taskSample1);
+    task_list.appendChild(task1);
+    const task2 = createTaskItem(taskSample2);
+    task_list.appendChild(task2);
+    const task3 = createTaskItem(taskSample3);
+    task_list.appendChild(task3);
+
+    task_panel.appendChild(task_list);
+
+    return task_panel
+}
+
+
+
+export { taskObject, createTaskItem, handleCircleClick, removeTaskItem, createTaskPanel };
