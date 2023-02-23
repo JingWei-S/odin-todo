@@ -145,12 +145,25 @@ body {
 
 .circle {
     height: calc(18px * 1.2);
-    width: calc(18px * 1.2);
+    width: calc(18px * 1.1);
     background-color: none;
     border: 2px solid var(--main-blue);
     border-radius: 50%;
-    display: inline-block;
-    /* margin-top: 0.2em; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.circle.checked {
+    background-color: var(--main-blue);
+}
+
+.circle:hover {
+    cursor: pointer;
+}
+
+.check {
+    color: white;
 }
 
 .task-panel {
@@ -188,6 +201,10 @@ li {
     gap: 0.3em;
     justify-content: center;
     align-items: center;
+}
+
+.item-li div.crossover{
+    text-decoration: line-through;
 }
 
 .item-li div {
