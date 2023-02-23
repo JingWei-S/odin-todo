@@ -5,6 +5,7 @@ import { add_project } from "./modules";
 import { create_project_list } from "./modules";
 import { taskObject } from "./tasks";
 import { createTaskItem } from "./tasks";
+import { handleCircleClick } from "./tasks";
 
 // this is for the DOM manipulation stuff page
 
@@ -116,6 +117,15 @@ task_panel.appendChild(task_list);
 
 // add to content
 content.appendChild(task_panel);
+
+// add the event listener to the circle
+const circles = document.querySelectorAll('.circle');
+circles.forEach(circle => {
+  circle.addEventListener('click', () => {
+    console.log('test')
+    handleCircleClick(circle);
+  });
+});
 
 
 
