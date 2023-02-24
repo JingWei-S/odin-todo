@@ -225,6 +225,17 @@ li {
     width: 1.2em;
 }
 
+#add-task {
+    background: none;
+    border: none;
+    font-size: 22px;
+    font-weight: bold;
+    appearance: none;
+    width: max(600px, 70vw);
+    text-align: left;
+    color: var(--bottom-blue);
+}
+
 /* form */
 .task-panel .form-container {
     margin-top: 0;
@@ -234,7 +245,7 @@ li {
     box-sizing: border-box;
     padding: 1em;
     width: max(600px, 70vw);
-    /* display: none; */
+    display: none;
 }
 
 form {
