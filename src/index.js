@@ -10,7 +10,8 @@ import { removeTaskItem } from "./tasks";
 import { createTaskPanel } from "./tasks";
 import { left_nav_selection } from "./modules";
 import { add_button_event_listener } from "./tasks";
-
+import { handle_cancel_button } from "./tasks";
+import { handle_submit_button } from "./tasks";
 
 // this is for the DOM manipulation stuff page
 
@@ -62,7 +63,6 @@ add_nav.addEventListener("click", () => {
   if (nav_project.childNodes.length < 6) {
     const element = add_project();
     nav_project.appendChild(element);
-    
   }
 });
 
@@ -98,6 +98,11 @@ nav_bar.addEventListener("click", (event) => {
     const task_panel = createTaskPanel(taskSamples);
     content.appendChild(task_panel);
     left_nav_selection(list_bar);
+    // add button listener
+    add_button_event_listener();
+    // here I can set up the cancel button and submit button feature
+    handle_cancel_button();
+    handle_submit_button();
   }
 });
 
@@ -105,13 +110,14 @@ content.append(list_bar);
 left_nav_selection(list_bar);
 const task_panel = createTaskPanel(taskSamples);
 
-
 // add to content
 content.appendChild(task_panel);
 
 // add button listener
 add_button_event_listener();
-
+// here I can set up the cancel button and submit button feature
+handle_cancel_button();
+handle_submit_button();
 
 // add the event listener to the circle
 const circles = document.querySelectorAll(".circle");

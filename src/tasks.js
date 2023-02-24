@@ -64,8 +64,6 @@ const reverseText = (desp) => {
 const removeTaskItem = (task) => {
   const task_item = task.parentNode.parentNode;
   task_item.remove();
-  // console.log(task.parentNode);
-  // console.log(task.parentNode.parentNode);
 };
 
 const createTaskPanel = (task_storage) => {
@@ -115,11 +113,27 @@ const add_button_event_listener = () => {
   const add_task = document.querySelector("#add-task");
   add_task.addEventListener("click", (e) => {
     // make the button disappear first
-    e.target.style.display = 'none';
+    e.target.style.display = "none";
     // then make the form appear
     const form_container = document.querySelector(".form-container");
-    form_container.style.display = 'flex';
+    form_container.style.display = "flex";
   });
+};
+
+const handle_cancel_button = () => {
+  const cancel_btn = document.querySelector('input[type="button"]');
+  cancel_btn.addEventListener("click", () => {
+    form_reform();
+  });
+};
+
+const form_reform = () => {
+    // make the form disappear
+    const form_container = document.querySelector(".form-container");
+    form_container.style.display = "none";
+    // then make the add button appear again
+    const add_task = document.querySelector("#add-task");
+    add_task.style.display = "block";
 };
 
 const taskForm = () => {
@@ -166,6 +180,28 @@ const taskForm = () => {
   return form;
 };
 
+const handle_submit_button = () => {
+  const form = document.querySelector("form");
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const task_desp = form.elements.task_desp.value;
+    const task_due = form.elements.task_due.value;
+    const newTask = taskObject(task_desp, task_due);
+    console.log(newTask);
+    // need to save the new task to the storage
+    // but also create a new object and append to the list
+    //
+    const task_list = document.querySelector("ul");
+    const task = createTaskItem(newTask);
+    const add_task = document.querySelector("#add-task");
+    task_list.insertBefore(task, add_task);
+    form.reset();
+    // make the button form disappear
+    form_reform();
+    
+  });
+};
+
 export {
   taskObject,
   createTaskItem,
@@ -173,4 +209,6 @@ export {
   removeTaskItem,
   createTaskPanel,
   add_button_event_listener,
+  handle_cancel_button,
+  handle_submit_button
 };

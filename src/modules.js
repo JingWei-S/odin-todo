@@ -1,4 +1,7 @@
 import { createTaskPanel } from "./tasks";
+import { add_button_event_listener } from "./tasks";
+import { handle_cancel_button } from "./tasks";
+import { handle_submit_button } from "./tasks";
 
 // initiate the task panel temporarily
 const taskSamples = [
@@ -85,6 +88,11 @@ const left_nav_selection = (list_bar) => {
       selected_li.classList.add("entry-select");
       const task_panel = createTaskPanel(taskSamples);
       content.appendChild(task_panel);
+      // add button listener
+      add_button_event_listener();
+      // here I can set up the cancel button and submit button feature
+      handle_cancel_button();
+      handle_submit_button();
     }
   });
 };
