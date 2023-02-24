@@ -9,6 +9,8 @@ import { handleCircleClick } from "./tasks";
 import { removeTaskItem } from "./tasks";
 import { createTaskPanel } from "./tasks";
 import { left_nav_selection } from "./modules";
+import { add_button_event_listener } from "./tasks";
+
 
 // this is for the DOM manipulation stuff page
 
@@ -107,7 +109,8 @@ const task_panel = createTaskPanel(taskSamples);
 // add to content
 content.appendChild(task_panel);
 
-
+// add button listener
+add_button_event_listener();
 
 
 // add the event listener to the circle
