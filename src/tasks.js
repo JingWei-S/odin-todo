@@ -134,10 +134,21 @@ const taskForm = () => {
     date_select.setAttribute("id", "task_due");
     date_div.appendChild(date_label);
     date_div.appendChild(date_select);
+    // add two buttons
+    const button_div = document.createElement('div');
+    button_div.classList.add('button-group');
+    const button_cancel = document.createElement('input');
+    button_cancel.setAttribute("type", "button");
+    button_cancel.setAttribute("value", "Cancel");
+    const button_submit = document.createElement('input');
+    button_submit.setAttribute("type", "submit");
+    button_submit.setAttribute("value", "Add Task");
+    button_div.appendChild(button_cancel);
+    button_div.appendChild(button_submit);
     // 
     form.appendChild(task_div);
     form.appendChild(date_div);
-
+    form.appendChild(button_div);
     return form
 };
 
