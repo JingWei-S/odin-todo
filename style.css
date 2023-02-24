@@ -186,6 +186,7 @@ ul {
     display: flex;
     flex-direction: column;
     gap: 0.8em;
+    padding-left: 0;
 }
 
 li {
@@ -222,4 +223,44 @@ li {
 
 .item-li img {
     width: 1.2em;
+}
+
+/* form */
+.task-panel .form-container {
+    margin-top: 0;
+    font-size: 18px;
+    border: 1px solid var(--top-blue);
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 1em;
+    width: max(600px, 70vw);
+    display: none;
+}
+
+form {
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+form > div {
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+}
+
+label {
+    margin-right: 0.3em;
+}
+
+input {
+    box-sizing: border-box;
+    padding: 0.2em;
+}
+
+input[type="text"] {
+    width: 40em;
+    color: var(--main-blue);
+}
+
+input[type="date"] {
+    width: fit-content;
 }
