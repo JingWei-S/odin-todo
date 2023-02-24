@@ -99,9 +99,47 @@ const createTaskPanel = (task_storage) => {
 
     task_panel.appendChild(task_list);
 
+    const form_container = document.createElement('div');
+    form_container.classList.add('form-container');
+    const form = taskForm();
+    form_container.appendChild(form);
+    task_panel.appendChild(form_container);
+
     return task_panel
 }
 
+const taskForm = () => {
+    const form = document.createElement('form');
+    form.action = '#';
+    // 
+    const task_div = document.createElement('div');
+    const task_label = document.createElement('label');
+    task_label.setAttribute("for", "task_desp");
+    task_label.textContent = "To-do task:";
+    const task_input = document.createElement("input");
+    task_input.setAttribute("type", "text");
+    task_input.setAttribute("name", "task_desp");
+    task_input.setAttribute("id", "task_desp");
+    task_input.setAttribute("placeholder", "Writing my thesis all day");
+    task_div.appendChild(task_label);
+    task_div.appendChild(task_input);
+    // 
+    const date_div = document.createElement('div');
+    const date_label = document.createElement('label');
+    date_label.setAttribute("for", "task_due");
+    date_label.textContent = "Due date:";
+    const date_select = document.createElement("input");
+    date_select.setAttribute("type", "date");
+    date_select.setAttribute("name", "task_due");
+    date_select.setAttribute("id", "task_due");
+    date_div.appendChild(date_label);
+    date_div.appendChild(date_select);
+    // 
+    form.appendChild(task_div);
+    form.appendChild(date_div);
+
+    return form
+};
 
 
 export { taskObject, createTaskItem, handleCircleClick, removeTaskItem, createTaskPanel };
