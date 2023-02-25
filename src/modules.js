@@ -3,6 +3,7 @@ import { add_button_event_listener } from "./tasks";
 import { handle_cancel_button } from "./tasks";
 import { handle_submit_button } from "./tasks";
 import { get_task_handlers } from "./tasks";
+import { taskObject } from "./tasks";
 
 // initiate the task panel temporarily
 const taskSamples = [
@@ -10,6 +11,14 @@ const taskSamples = [
   "Study for 24 hours",
   "Hunting Alligators Non STOP",
 ];
+
+const taskSampleArray = [
+  taskObject(taskSamples[0], "2023-12-31", 'Today'),
+  taskObject(taskSamples[1], "1996-03-17", 'Week'),
+  taskObject(taskSamples[2], "2021-02-02", 'Month'),
+];
+
+// 
 
 const content = document.querySelector(".content");
 // the items in the nav bar
@@ -87,7 +96,9 @@ const left_nav_selection = (list_bar) => {
 
       const selected_li = event.target;
       selected_li.classList.add("entry-select");
-      const task_panel = createTaskPanel(taskSamples);
+      const { top_button, left_button } = getEntry();
+      const tasks = getTasks(top_button.textContent, left_button.textContent);
+      const task_panel = createTaskPanel(tasks);
       content.appendChild(task_panel);
       // add button listener
       add_button_event_listener();
@@ -101,6 +112,72 @@ const left_nav_selection = (list_bar) => {
   });
 };
 
+function storageAvailable(type) {
+  let storage;
+  try {
+    storage = window[type];
+    const x = "__storage_test__";
+    storage.setItem(x, x);
+    storage.removeItem(x);
+    return true;
+  } catch (e) {
+    return (
+      e instanceof DOMException &&
+      // everything except Firefox
+      (e.code === 22 ||
+        // Firefox
+        e.code === 1014 ||
+        // test name field too, because code might not be present
+        // everything except Firefox
+        e.name === "QuotaExceededError" ||
+        // Firefox
+        e.name === "NS_ERROR_DOM_QUOTA_REACHED") &&
+      // acknowledge QuotaExceededError only if there's something already stored
+      storage &&
+      storage.length !== 0
+    );
+  }
+}
+
+if (storageAvailable("localStorage")) {
+  console.log("Testing local storage!");
+} else {
+  console.log("Bad bad bad");
+}
+
+const saveTasks = (entry, taskObject) => {
+  localStorage.setItem(entry, JSON.stringify(taskObject));
+  
+};
+
+
+
+
+const getTasks = (entry, select = null) => {
+    const task_storage = localStorage.getItem(entry);
+    if (task_storage !== null) {
+        const tasks = JSON.parse(task_storage);
+        if (select!== null) {
+            const selected_tasks = tasks.filter(t => t.entry === select);
+            return selected_tasks
+        } else {
+            return tasks
+        }
+        
+    }
+}
+
+const insertTasks = (entry, task) => {
+    const og_task_storage = localStorage.getItem(entry);
+    const og_tasks = og_task_storage === null ? [] : JSON.parse(og_task_storage);
+    og_tasks.push(task);
+    saveTasks(entry, og_tasks);
+    console.log(og_tasks)
+}
+
+// this is key to store the data locally :)
+insertTasks('Time', taskSampleArray);
+
 export {
   nav_items,
   nav_a,
@@ -110,4 +187,7 @@ export {
   create_project_list,
   getEntry,
   left_nav_selection,
+  taskSamples,
+  getTasks,
+  insertTasks
 };

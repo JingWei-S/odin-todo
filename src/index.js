@@ -10,15 +10,12 @@ import { add_button_event_listener } from "./tasks";
 import { handle_cancel_button } from "./tasks";
 import { handle_submit_button } from "./tasks";
 import { createDonePanel } from "./tasks";
+import { getTasks } from "./modules";
+import { getEntry } from "./modules";
 
 // this is for the DOM manipulation stuff page
 
-// initiate the task panel temporarily
-const taskSamples = [
-  "Sleep for 12 hours",
-  "Study for 24 hours",
-  "Hunting Alligators Non STOP",
-];
+
 
 // the body
 const body = document.querySelector("body");
@@ -97,8 +94,12 @@ nav_bar.addEventListener("click", (event) => {
       while (list_bar.firstChild) {
         list_bar.replaceChildren();
       }
+      
       list_bar.appendChild(list);
-      const task_panel = createTaskPanel(taskSamples);
+      const { top_button, left_button } = getEntry();
+      const tasks = getTasks(top_button.textContent, left_button.textContent);
+      console.log(tasks);
+      const task_panel = createTaskPanel(tasks);
       content.appendChild(task_panel);
       left_nav_selection(list_bar);
       // add button listener
@@ -119,7 +120,7 @@ nav_bar.addEventListener("click", (event) => {
       text.style.textAlign = 'center';
       list_bar.appendChild(text);
       list_bar.style.alignContent = 'center';
-      const done_board = createDonePanel(nav_i, taskSamples);
+      const done_board = createDonePanel(nav_i, tasks);
       // console.log(nav_i.textContent)
       content.appendChild(done_board);
     }
@@ -128,6 +129,8 @@ nav_bar.addEventListener("click", (event) => {
 
 content.append(list_bar);
 left_nav_selection(list_bar);
+const taskSamples = getTasks('Time', 'Today');
+console.log(taskSamples)
 const task_panel = createTaskPanel(taskSamples);
 
 // add to content

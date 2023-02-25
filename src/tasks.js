@@ -1,11 +1,12 @@
+import { insertTasks } from "./modules";
 import { getEntry } from "./modules";
 
-const taskObject = (taskContent, dueDate) => {
+
+const taskObject = (taskContent, dueDate, entry) => {
   return {
     taskContent,
     dueDate,
-    isCompleted: false,
-    curState: null,
+    entry,
   };
 };
 
@@ -42,34 +43,33 @@ const createFinishedItem = (status, taskObject) => {
   task_item_whole.classList.add("item-li");
   const task_item_circle = document.createElement("span");
   task_item_circle.classList.add("circle");
-  task_item_circle.classList.add('checked');
+  task_item_circle.classList.add("checked");
   const check = document.createElement("span");
   check.textContent = "\u2713";
   check.classList.add("check");
   task_item_circle.appendChild(check);
   task_item_whole.appendChild(task_item_circle);
   const task_item_desp = document.createElement("div");
-  console.log(taskObject)
+  console.log(taskObject);
   task_item_desp.textContent = taskObject.taskContent;
   task_item_whole.appendChild(task_item_desp);
-  console.log(status)
-  if (status.textContent === 'Archived') {
+  console.log(status);
+  if (status.textContent === "Archived") {
     const archive = document.createElement("img");
     archive.src = "./images/icons/archive-arrow-down-outline.svg";
     archive.classList.add("archive");
-    archive.style.marginLeft = 'auto';
+    archive.style.marginLeft = "auto";
     task_item_whole.appendChild(archive);
   } else {
     const achievement = document.createElement("img");
     achievement.src = "./images/icons/trophy.svg";
     achievement.classList.add("achivement");
-    achievement.style.marginLeft = 'auto';
+    achievement.style.marginLeft = "auto";
     task_item_whole.appendChild(achievement);
   }
 
   task_item_li.appendChild(task_item_whole);
   return task_item_li;
-
 };
 
 const handleCircleClick = (circle) => {
@@ -108,7 +108,7 @@ const createTaskPanel = (task_storage) => {
   if (task_panel) {
     task_panel.remove();
   }
-  const { top_button, left_button } = getEntry();
+
   // console.log(left_button.textContent);
   // we can assume the format of task_storage
   task_panel = document.createElement("div");
@@ -117,19 +117,26 @@ const createTaskPanel = (task_storage) => {
   task_title.textContent = "Tasks";
   task_panel.appendChild(task_title);
 
-  // console.log(task_storage);
-  const taskSample1 = taskObject(task_storage[0], left_button.textContent);
-  const taskSample2 = taskObject(task_storage[1], top_button.textContent);
-  const taskSample3 = taskObject(task_storage[2], "2021-02-02");
+  //   console.log(task_storage);
+  //   const taskSample1 = taskObject(task_storage[0], left_button.textContent);
+  //   const taskSample2 = taskObject(task_storage[1], top_button.textContent);
+  //   const taskSample3 = taskObject(task_storage[2], "2021-02-02");
 
   // real task list
   const task_list = document.createElement("ul");
-  const task1 = createTaskItem(taskSample1);
-  task_list.appendChild(task1);
-  const task2 = createTaskItem(taskSample2);
-  task_list.appendChild(task2);
-  const task3 = createTaskItem(taskSample3);
-  task_list.appendChild(task3);
+  if (task_storage) {
+    for (let task of task_storage) {
+      const task_i = createTaskItem(task);
+      task_list.appendChild(task_i);
+    }
+  }
+
+  //   const task1 = createTaskItem(task_storage);
+  //   task_list.appendChild(task1);
+  //   const task2 = createTaskItem(taskSample2);
+  //   task_list.appendChild(task2);
+  //   const task3 = createTaskItem(taskSample3);
+  //   task_list.appendChild(task3);
 
   const add_task = document.createElement("button");
   add_task.textContent = "+ Add Task";
@@ -142,7 +149,7 @@ const createTaskPanel = (task_storage) => {
   const form = taskForm();
   form_container.appendChild(form);
   task_panel.appendChild(form_container);
-  console.log("test");
+  //   console.log("test");
 
   return task_panel;
 };
@@ -224,8 +231,12 @@ const handle_submit_button = () => {
     event.preventDefault();
     const task_desp = form.elements.task_desp.value;
     const task_due = form.elements.task_due.value;
-    const newTask = taskObject(task_desp, task_due);
     // need to save the new task to the storage
+    const { top_button, left_button } = getEntry();
+    const newTask = taskObject(task_desp, task_due, left_button.textContent);
+    
+    
+    insertTasks(top_button.textContent, newTask);
     // but also create a new object and append to the list
     //
     const task_list = document.querySelector("ul");
@@ -239,7 +250,7 @@ const handle_submit_button = () => {
 };
 
 const get_task_handlers = (() => {
-  console.log("lol");
+  //   console.log("lol");
   // handle the circle click - this is only for DOM manipulation
   const handle_circle_click = () => {
     const circles = document.querySelectorAll(".circle");
@@ -289,12 +300,11 @@ const createDonePanel = (nav, task_storage) => {
   const task_title = document.createElement("div");
   task_title.textContent = nav.textContent + " Board";
   task_panel.appendChild(task_title);
-  
-  
+
   const taskSample1 = taskObject(task_storage[0], nav.textContent);
   const taskSample2 = taskObject(task_storage[1], nav.textContent);
   const taskSample3 = taskObject(task_storage[2], "2021-02-02");
-  
+
   // real task list
   const task_list = document.createElement("ul");
   const task1 = createFinishedItem(nav, taskSample1);
