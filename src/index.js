@@ -9,6 +9,7 @@ import { left_nav_selection } from "./modules";
 import { add_button_event_listener } from "./tasks";
 import { handle_cancel_button } from "./tasks";
 import { handle_submit_button } from "./tasks";
+import { createDonePanel } from "./tasks";
 
 // this is for the DOM manipulation stuff page
 
@@ -35,7 +36,7 @@ body.insertBefore(header, content);
 
 // add a footer
 const footer = document.createElement("div");
-footer.textContent = "Made By Jing with PhD Regrets";
+footer.textContent = "Made By Jing";
 footer.classList.add("footer");
 content.after(footer);
 
@@ -86,23 +87,42 @@ nav_bar.addEventListener("click", (event) => {
 
     const nav_i = event.target;
     nav_i.classList.add("active");
-    const list = create_project_list(nav_i.textContent);
-    // this is to remove all the children nodes
-    while (list_bar.firstChild) {
-      list_bar.replaceChildren();
+    if (
+      (nav_i.textContent != "Achievements") &
+      (nav_i.textContent != "Archived")
+    ) {
+      list_bar.style.display = 'flex';
+      const list = create_project_list(nav_i.textContent);
+      // this is to remove all the children nodes
+      while (list_bar.firstChild) {
+        list_bar.replaceChildren();
+      }
+      list_bar.appendChild(list);
+      const task_panel = createTaskPanel(taskSamples);
+      content.appendChild(task_panel);
+      left_nav_selection(list_bar);
+      // add button listener
+      add_button_event_listener();
+      // here I can set up the cancel button and submit button feature
+      handle_cancel_button();
+      handle_submit_button();
+      get_task_handlers.handle_achivement();
+      get_task_handlers.handle_archive();
+      get_task_handlers.handle_circle_click();
+    } else {
+      while (list_bar.firstChild) {
+        list_bar.replaceChildren();
+      }
+      const text = document.createElement('div');
+      text.textContent = `See What You've Finished!`;
+      text.style.fontSize = '36px';
+      text.style.textAlign = 'center';
+      list_bar.appendChild(text);
+      list_bar.style.alignContent = 'center';
+      const done_board = createDonePanel(nav_i, taskSamples);
+      // console.log(nav_i.textContent)
+      content.appendChild(done_board);
     }
-    list_bar.appendChild(list);
-    const task_panel = createTaskPanel(taskSamples);
-    content.appendChild(task_panel);
-    left_nav_selection(list_bar);
-    // add button listener
-    add_button_event_listener();
-    // here I can set up the cancel button and submit button feature
-    handle_cancel_button();
-    handle_submit_button();
-    get_task_handlers.handle_achivement();
-    get_task_handlers.handle_archive();
-    get_task_handlers.handle_circle_click();
   }
 });
 

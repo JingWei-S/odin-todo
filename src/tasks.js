@@ -36,6 +36,42 @@ const createTaskItem = (taskObject) => {
   return task_item_li;
 };
 
+const createFinishedItem = (status, taskObject) => {
+  const task_item_li = document.createElement("li");
+  const task_item_whole = document.createElement("div");
+  task_item_whole.classList.add("item-li");
+  const task_item_circle = document.createElement("span");
+  task_item_circle.classList.add("circle");
+  task_item_circle.classList.add('checked');
+  const check = document.createElement("span");
+  check.textContent = "\u2713";
+  check.classList.add("check");
+  task_item_circle.appendChild(check);
+  task_item_whole.appendChild(task_item_circle);
+  const task_item_desp = document.createElement("div");
+  console.log(taskObject)
+  task_item_desp.textContent = taskObject.taskContent;
+  task_item_whole.appendChild(task_item_desp);
+  console.log(status)
+  if (status.textContent === 'Archived') {
+    const archive = document.createElement("img");
+    archive.src = "./images/icons/archive-arrow-down-outline.svg";
+    archive.classList.add("archive");
+    archive.style.marginLeft = 'auto';
+    task_item_whole.appendChild(archive);
+  } else {
+    const achievement = document.createElement("img");
+    achievement.src = "./images/icons/trophy.svg";
+    achievement.classList.add("achivement");
+    achievement.style.marginLeft = 'auto';
+    task_item_whole.appendChild(achievement);
+  }
+
+  task_item_li.appendChild(task_item_whole);
+  return task_item_li;
+
+};
+
 const handleCircleClick = (circle) => {
   if (circle.classList.contains("checked")) {
     circle.classList.remove("checked");
@@ -63,6 +99,7 @@ const reverseText = (desp) => {
 // make task items disappear from the panel
 const removeTaskItem = (task) => {
   const task_item = task.parentNode.parentNode;
+  console.log(task.parentNode);
   task_item.remove();
 };
 
@@ -105,8 +142,8 @@ const createTaskPanel = (task_storage) => {
   const form = taskForm();
   form_container.appendChild(form);
   task_panel.appendChild(form_container);
-  console.log('test');
-  
+  console.log("test");
+
   return task_panel;
 };
 
@@ -188,7 +225,6 @@ const handle_submit_button = () => {
     const task_desp = form.elements.task_desp.value;
     const task_due = form.elements.task_due.value;
     const newTask = taskObject(task_desp, task_due);
-    console.log(newTask);
     // need to save the new task to the storage
     // but also create a new object and append to the list
     //
@@ -202,25 +238,21 @@ const handle_submit_button = () => {
   });
 };
 
-
-
-
-
 const get_task_handlers = (() => {
-    console.log('lol')
-    // handle the circle click
-    const handle_circle_click = () => {
-        const circles = document.querySelectorAll(".circle");
-        // console.log(document.querySelector("ul"));
-        circles.forEach((circle) => {
-        circle.addEventListener("click", () => {
-            handleCircleClick(circle);
-        });
-        });
-    };
+  console.log("lol");
+  // handle the circle click - this is only for DOM manipulation
+  const handle_circle_click = () => {
+    const circles = document.querySelectorAll(".circle");
+    // console.log(document.querySelector("ul"));
+    circles.forEach((circle) => {
+      circle.addEventListener("click", () => {
+        handleCircleClick(circle);
+      });
+    });
+  };
 
-    // manipulate achievements
-const handle_achivement = () => {
+  // manipulate achievements
+  const handle_achivement = () => {
     const ach_icons = document.querySelectorAll(".achivement");
     ach_icons.forEach((ach) => {
       ach.addEventListener("click", () => {
@@ -228,7 +260,7 @@ const handle_achivement = () => {
       });
     });
   };
-  
+
   // manipulate archive
   const handle_archive = () => {
     const axv_icons = document.querySelectorAll(".archive");
@@ -239,12 +271,43 @@ const handle_achivement = () => {
     });
   };
 
-    return {
-        handle_circle_click,
-        handle_achivement,
-        handle_archive
-    }
+  return {
+    handle_circle_click,
+    handle_achivement,
+    handle_archive,
+  };
 })();
+
+const createDonePanel = (nav, task_storage) => {
+  let task_panel = document.querySelector(".task-panel");
+  if (task_panel) {
+    task_panel.remove();
+  }
+  task_panel = document.createElement("div");
+  task_panel.classList.add("task-panel");
+  task_panel.classList.add("done");
+  const task_title = document.createElement("div");
+  task_title.textContent = nav.textContent + " Board";
+  task_panel.appendChild(task_title);
+  
+  
+  const taskSample1 = taskObject(task_storage[0], nav.textContent);
+  const taskSample2 = taskObject(task_storage[1], nav.textContent);
+  const taskSample3 = taskObject(task_storage[2], "2021-02-02");
+  
+  // real task list
+  const task_list = document.createElement("ul");
+  const task1 = createFinishedItem(nav, taskSample1);
+  console.log(task1);
+  task_list.appendChild(task1);
+  const task2 = createFinishedItem(nav, taskSample2);
+  task_list.appendChild(task2);
+  const task3 = createFinishedItem(nav, taskSample3);
+  task_list.appendChild(task3);
+  task_panel.appendChild(task_list);
+
+  return task_panel;
+};
 
 export {
   taskObject,
@@ -255,5 +318,6 @@ export {
   add_button_event_listener,
   handle_cancel_button,
   handle_submit_button,
-  get_task_handlers
+  get_task_handlers,
+  createDonePanel,
 };
