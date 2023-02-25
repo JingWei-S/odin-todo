@@ -316,8 +316,8 @@ const createDonePanel = (nav, task_storage) => {
   if (task_storage) {
     
     for (let task of task_storage) {
-        
-      const task_i = createTaskItem(task);
+    console.log(task.taskContent)
+      const task_i = createFinishedItem(nav, task);
       task_list.appendChild(task_i);
     }
   }

@@ -187,13 +187,13 @@ const insertTasks = (entry, task) => {
   const og_tasks = og_task_storage === null ? [] : JSON.parse(og_task_storage);
   
   og_tasks.push(task);
-  saveTasks(entry.toString(), og_tasks);
+  saveTasks(entry, og_tasks);
 //   console.log(typeof(entry));
 };
 
 // this is key to store the data locally :)
-for (let task of taskSampleArray) {
-    insertTasks("Time", task);
+if (!localStorage.getItem('Time')) {
+    saveTasks('Time', taskSampleArray);
 }
 
 
