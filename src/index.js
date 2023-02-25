@@ -3,10 +3,7 @@ import { nav_a } from "./modules";
 import { create_nav } from "./modules";
 import { add_project } from "./modules";
 import { create_project_list } from "./modules";
-import { taskObject } from "./tasks";
-import { createTaskItem } from "./tasks";
-import { handleCircleClick } from "./tasks";
-import { removeTaskItem } from "./tasks";
+import { get_task_handlers } from "./tasks";
 import { createTaskPanel } from "./tasks";
 import { left_nav_selection } from "./modules";
 import { add_button_event_listener } from "./tasks";
@@ -103,6 +100,9 @@ nav_bar.addEventListener("click", (event) => {
     // here I can set up the cancel button and submit button feature
     handle_cancel_button();
     handle_submit_button();
+    get_task_handlers.handle_achivement();
+    get_task_handlers.handle_archive();
+    get_task_handlers.handle_circle_click();
   }
 });
 
@@ -119,26 +119,6 @@ add_button_event_listener();
 handle_cancel_button();
 handle_submit_button();
 
-// add the event listener to the circle
-const circles = document.querySelectorAll(".circle");
-circles.forEach((circle) => {
-  circle.addEventListener("click", () => {
-    handleCircleClick(circle);
-  });
-});
-
-// manipulate achievements
-const ach_icons = document.querySelectorAll(".achivement");
-ach_icons.forEach((ach) => {
-  ach.addEventListener("click", () => {
-    removeTaskItem(ach);
-  });
-});
-
-// manipulate archive
-const axv_icons = document.querySelectorAll(".archive");
-axv_icons.forEach((axv) => {
-  axv.addEventListener("click", () => {
-    removeTaskItem(axv);
-  });
-});
+get_task_handlers.handle_achivement();
+get_task_handlers.handle_archive();
+get_task_handlers.handle_circle_click();

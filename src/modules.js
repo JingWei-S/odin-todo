@@ -2,6 +2,7 @@ import { createTaskPanel } from "./tasks";
 import { add_button_event_listener } from "./tasks";
 import { handle_cancel_button } from "./tasks";
 import { handle_submit_button } from "./tasks";
+import { get_task_handlers } from "./tasks";
 
 // initiate the task panel temporarily
 const taskSamples = [
@@ -93,6 +94,9 @@ const left_nav_selection = (list_bar) => {
       // here I can set up the cancel button and submit button feature
       handle_cancel_button();
       handle_submit_button();
+      get_task_handlers.handle_achivement();
+      get_task_handlers.handle_archive();
+      get_task_handlers.handle_circle_click();
     }
   });
 };

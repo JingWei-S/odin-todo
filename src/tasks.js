@@ -105,7 +105,8 @@ const createTaskPanel = (task_storage) => {
   const form = taskForm();
   form_container.appendChild(form);
   task_panel.appendChild(form_container);
-
+  console.log('test');
+  
   return task_panel;
 };
 
@@ -128,12 +129,12 @@ const handle_cancel_button = () => {
 };
 
 const form_reform = () => {
-    // make the form disappear
-    const form_container = document.querySelector(".form-container");
-    form_container.style.display = "none";
-    // then make the add button appear again
-    const add_task = document.querySelector("#add-task");
-    add_task.style.display = "block";
+  // make the form disappear
+  const form_container = document.querySelector(".form-container");
+  form_container.style.display = "none";
+  // then make the add button appear again
+  const add_task = document.querySelector("#add-task");
+  add_task.style.display = "block";
 };
 
 const taskForm = () => {
@@ -198,9 +199,52 @@ const handle_submit_button = () => {
     form.reset();
     // make the button form disappear
     form_reform();
-    
   });
 };
+
+
+
+
+
+const get_task_handlers = (() => {
+    console.log('lol')
+    // handle the circle click
+    const handle_circle_click = () => {
+        const circles = document.querySelectorAll(".circle");
+        // console.log(document.querySelector("ul"));
+        circles.forEach((circle) => {
+        circle.addEventListener("click", () => {
+            handleCircleClick(circle);
+        });
+        });
+    };
+
+    // manipulate achievements
+const handle_achivement = () => {
+    const ach_icons = document.querySelectorAll(".achivement");
+    ach_icons.forEach((ach) => {
+      ach.addEventListener("click", () => {
+        removeTaskItem(ach);
+      });
+    });
+  };
+  
+  // manipulate archive
+  const handle_archive = () => {
+    const axv_icons = document.querySelectorAll(".archive");
+    axv_icons.forEach((axv) => {
+      axv.addEventListener("click", () => {
+        removeTaskItem(axv);
+      });
+    });
+  };
+
+    return {
+        handle_circle_click,
+        handle_achivement,
+        handle_archive
+    }
+})();
 
 export {
   taskObject,
@@ -210,5 +254,6 @@ export {
   createTaskPanel,
   add_button_event_listener,
   handle_cancel_button,
-  handle_submit_button
+  handle_submit_button,
+  get_task_handlers
 };
