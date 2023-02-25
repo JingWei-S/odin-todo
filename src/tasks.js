@@ -100,13 +100,13 @@ const reverseText = (desp) => {
 // make task items disappear from the panel
 const removeTaskItem = (task) => {
   const task_item = task.parentNode.parentNode;
-  const task_desp = task_item.parentNode.querySelector('.desp').textContent;
-  const task_due = task_item.parentNode.querySelector('.due-date').textContent;
+  const task_desp = task_item.querySelector('.desp').textContent;
+  const task_due = task_item.querySelector('.due-date').textContent;
   const task_entry = task.classList.value === 'achivement' ? 'Achievements' : 'Archived';
   const { top_button, left_button } = getEntry();
   let task_ = taskObject(task_desp, task_due, left_button.textContent);
   removeTask(top_button.textContent, task_);
-  console.log(task.classList.value)
+  console.log(task_desp)
   task_ = taskObject(task_desp, task_due, null);
   insertTasks(task_entry, task_);
   task_item.remove();
@@ -255,6 +255,9 @@ const handle_submit_button = () => {
     form.reset();
     // make the button form disappear
     form_reform();
+    get_task_handlers.handle_circle_click();
+    get_task_handlers.handle_achivement();
+    get_task_handlers.handle_archive();
   });
 };
 
@@ -285,7 +288,9 @@ const get_task_handlers = (() => {
   const handle_archive = () => {
     const axv_icons = document.querySelectorAll(".archive");
     axv_icons.forEach((axv) => {
-      axv.addEventListener("click", () => {
+      axv.addEventListener("click", (e) => {
+        // console.log(e.parentNode)
+        // checkDone(e);
         removeTaskItem(axv);
       });
     });
@@ -297,6 +302,11 @@ const get_task_handlers = (() => {
     handle_archive,
   };
 })();
+
+const checkDone = (e) => {
+    const circle = e.parentNode.querySelector('.circle');
+    console.log(circle.classList.contains("checked"));
+};
 
 const createDonePanel = (nav, task_storage) => {
   let task_panel = document.querySelector(".task-panel");
@@ -321,16 +331,6 @@ const createDonePanel = (nav, task_storage) => {
       task_list.appendChild(task_i);
     }
   }
-
-//   // real task list
-//   const task_list = document.createElement("ul");
-//   const task1 = createFinishedItem(nav, taskSample1);
-//   console.log(task1);
-//   task_list.appendChild(task1);
-//   const task2 = createFinishedItem(nav, taskSample2);
-//   task_list.appendChild(task2);
-//   const task3 = createFinishedItem(nav, taskSample3);
-//   task_list.appendChild(task3);
   task_panel.appendChild(task_list);
 
   return task_panel;
