@@ -13,12 +13,12 @@ const taskSamples = [
 ];
 
 const taskSampleArray = [
-  taskObject(taskSamples[0], "2023-12-31", 'Today'),
-  taskObject(taskSamples[1], "1996-03-17", 'Week'),
-  taskObject(taskSamples[2], "2021-02-02", 'Month'),
+  taskObject(taskSamples[0], "2023-12-31", "Today"),
+  taskObject(taskSamples[1], "1996-03-17", "Week"),
+  taskObject(taskSamples[2], "2021-02-02", "Month"),
 ];
 
-// 
+//
 
 const content = document.querySelector(".content");
 // the items in the nav bar
@@ -147,36 +147,55 @@ if (storageAvailable("localStorage")) {
 
 const saveTasks = (entry, taskObject) => {
   localStorage.setItem(entry, JSON.stringify(taskObject));
-  
 };
 
+const removeTask = (entry, taskObject) => {
+  const task_storage = localStorage.getItem(entry);
+  if (task_storage !== null) {
+    const tasks = JSON.parse(task_storage);
+    const index = tasks.findIndex(
+      (t) =>
+        (t.taskContent === taskObject.taskContent &&
+        t.dueDate === taskObject.dueDate) && (
+            t.entry === taskObject.entry
+        )
+    );
+    
+    if (index !== -1) {
+        tasks.splice(index, 1);
+        saveTasks(entry, tasks);
+    } 
+  }
 
-
+};
 
 const getTasks = (entry, select = null) => {
-    const task_storage = localStorage.getItem(entry);
-    if (task_storage !== null) {
-        const tasks = JSON.parse(task_storage);
-        if (select!== null) {
-            const selected_tasks = tasks.filter(t => t.entry === select);
-            return selected_tasks
-        } else {
-            return tasks
-        }
-        
+  const task_storage = localStorage.getItem(entry);
+  if (task_storage !== null) {
+    const tasks = JSON.parse(task_storage);
+    if (select !== null) {
+      const selected_tasks = tasks.filter((t) => t.entry === select);
+      return selected_tasks;
+    } else {
+      return tasks;
     }
-}
+  }
+};
 
 const insertTasks = (entry, task) => {
-    const og_task_storage = localStorage.getItem(entry);
-    const og_tasks = og_task_storage === null ? [] : JSON.parse(og_task_storage);
-    og_tasks.push(task);
-    saveTasks(entry, og_tasks);
-    console.log(og_tasks)
-}
+  const og_task_storage = localStorage.getItem(entry);
+  const og_tasks = og_task_storage === null ? [] : JSON.parse(og_task_storage);
+  
+  og_tasks.push(task);
+  saveTasks(entry.toString(), og_tasks);
+//   console.log(typeof(entry));
+};
 
 // this is key to store the data locally :)
-insertTasks('Time', taskSampleArray);
+for (let task of taskSampleArray) {
+    insertTasks("Time", task);
+}
+
 
 export {
   nav_items,
@@ -189,5 +208,6 @@ export {
   left_nav_selection,
   taskSamples,
   getTasks,
-  insertTasks
+  insertTasks,
+  removeTask
 };

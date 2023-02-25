@@ -1,6 +1,6 @@
 import { insertTasks } from "./modules";
 import { getEntry } from "./modules";
-
+import { removeTask } from "./modules";
 
 const taskObject = (taskContent, dueDate, entry) => {
   return {
@@ -19,6 +19,7 @@ const createTaskItem = (taskObject) => {
   task_item_whole.appendChild(task_item_circle);
   const task_item_desp = document.createElement("div");
   task_item_desp.textContent = taskObject.taskContent;
+  task_item_desp.classList.add("desp");
   task_item_whole.appendChild(task_item_desp);
   const task_item_due = document.createElement("div");
   task_item_due.textContent = taskObject.dueDate.toString();
@@ -99,7 +100,15 @@ const reverseText = (desp) => {
 // make task items disappear from the panel
 const removeTaskItem = (task) => {
   const task_item = task.parentNode.parentNode;
-  console.log(task.parentNode);
+  const task_desp = task_item.parentNode.querySelector('.desp').textContent;
+  const task_due = task_item.parentNode.querySelector('.due-date').textContent;
+  const task_entry = task.classList.value === 'achivement' ? 'Achievements' : 'Archived';
+  const { top_button, left_button } = getEntry();
+  let task_ = taskObject(task_desp, task_due, left_button.textContent);
+  removeTask(top_button.textContent, task_);
+  console.log(task.classList.value)
+  task_ = taskObject(task_desp, task_due, null);
+  insertTasks(task_entry, task_);
   task_item.remove();
 };
 
@@ -301,19 +310,27 @@ const createDonePanel = (nav, task_storage) => {
   task_title.textContent = nav.textContent + " Board";
   task_panel.appendChild(task_title);
 
-  const taskSample1 = taskObject(task_storage[0], nav.textContent);
-  const taskSample2 = taskObject(task_storage[1], nav.textContent);
-  const taskSample3 = taskObject(task_storage[2], "2021-02-02");
-
+  console.log(task_storage);
   // real task list
   const task_list = document.createElement("ul");
-  const task1 = createFinishedItem(nav, taskSample1);
-  console.log(task1);
-  task_list.appendChild(task1);
-  const task2 = createFinishedItem(nav, taskSample2);
-  task_list.appendChild(task2);
-  const task3 = createFinishedItem(nav, taskSample3);
-  task_list.appendChild(task3);
+  if (task_storage) {
+    
+    for (let task of task_storage) {
+        
+      const task_i = createTaskItem(task);
+      task_list.appendChild(task_i);
+    }
+  }
+
+//   // real task list
+//   const task_list = document.createElement("ul");
+//   const task1 = createFinishedItem(nav, taskSample1);
+//   console.log(task1);
+//   task_list.appendChild(task1);
+//   const task2 = createFinishedItem(nav, taskSample2);
+//   task_list.appendChild(task2);
+//   const task3 = createFinishedItem(nav, taskSample3);
+//   task_list.appendChild(task3);
   task_panel.appendChild(task_list);
 
   return task_panel;

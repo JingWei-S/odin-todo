@@ -49,17 +49,17 @@ for (let i = 0; i < nav_items.length; i++) {
 }
 nav_bar.appendChild(nav_project);
 
-// create add option
-const add_nav = create_nav("Add new +", 4);
-nav_bar.appendChild(add_nav);
+// // create add option
+// const add_nav = create_nav("Add new +", 4);
+// nav_bar.appendChild(add_nav);
 
-add_nav.addEventListener("click", () => {
-  // we do not allow appending new projects indefinitely
-  if (nav_project.childNodes.length < 6) {
-    const element = add_project();
-    nav_project.appendChild(element);
-  }
-});
+// add_nav.addEventListener("click", () => {
+//   // we do not allow appending new projects indefinitely
+//   if (nav_project.childNodes.length < 6) {
+//     const element = add_project();
+//     nav_project.appendChild(element);
+//   }
+// });
 
 // nav items on the right
 const nav_a_element = document.createElement("div");
@@ -120,8 +120,8 @@ nav_bar.addEventListener("click", (event) => {
       text.style.textAlign = 'center';
       list_bar.appendChild(text);
       list_bar.style.alignContent = 'center';
+      const tasks = getTasks(nav_i.textContent);
       const done_board = createDonePanel(nav_i, tasks);
-      // console.log(nav_i.textContent)
       content.appendChild(done_board);
     }
   }
@@ -130,7 +130,6 @@ nav_bar.addEventListener("click", (event) => {
 content.append(list_bar);
 left_nav_selection(list_bar);
 const taskSamples = getTasks('Time', 'Today');
-console.log(taskSamples)
 const task_panel = createTaskPanel(taskSamples);
 
 // add to content
